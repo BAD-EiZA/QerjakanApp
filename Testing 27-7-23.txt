@@ -1,0 +1,24 @@
+
+-account grid 1 sticky 
+
+#done 
+-multi skill <ok>
+-multi language <ok>
+-skill checkbox <ok>
+-ganti pin harus input pin lama <ok>
+-withdraw close kanan <ok>
+-tombol checkout close <ok>
+-midtrans sisain bank transfer & qris <ok>
+-qris method benerin <ok>
+-myorder benerin <ok>
+-akun bank jika ada kasih tau <ok>
+-detail gig, checkout if not user must login <ok>
+-category filter <ok>
+-hapus explore dan qerjakan bisnis <ok>
+-modal login X kanan <ok>
+-footer tengah <ok>
+-routing toko saya <ok>
+-verify pin ganti jadi change password <ok>
+-education -> latest education <ok>
+-overflow x account <ok>
+-chat perbaiki fs node module <ok>

@@ -1,0 +1,6 @@
+-login -> if verified -> logged
+-all credential info must input pin
+-if user want to change email send verification email to new email
+-if user want to change pin ush input previous pin 
+-add pin to user
+-if user not verified send warning to verifying on 2 x 24 hours

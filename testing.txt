@@ -1,0 +1,9 @@
+-Register 
+#blank required filed test <ok>
+#send email verification <ok>
+#set new pin <ok>
+
+
+-Login
+#blank required filed test <ok>
+#incorrect password or email <ok>
