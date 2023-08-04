@@ -1,7 +1,0 @@
-Transaksi => ask penjual => look invoice => enter send message with invoice
-Chat => last seen => lampirkan invoince && gambar 
-MVP: 
--bisa chat
--image
--invoice
--tgl ngirim pesan

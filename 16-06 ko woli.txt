@@ -1,6 +1,0 @@
--amount
--gross amont
--refund kocak di ilang ok
--amount withdraw jadi type number ok
--balance 0 ok
--refund sisi buyer langsung deactive ok
