@@ -42,6 +42,7 @@ const DetailClient: React.FC<DetailProps> = ({
   review,
 }) => {
   const [isLoading, setIsloading] = useState(false);
+  const [isBalance, setIsBalance] = useState(true)
   const [orderId, setOrderId] = useState("");
   const router = useRouter();
   const [active, setActive] = useState(false);
@@ -304,6 +305,32 @@ const DetailClient: React.FC<DetailProps> = ({
         setIsloading(false);
       });
   };
+  const Autodeletetransaction = async (order_id:string, prevBalance: number) => {
+    try {
+      setIsloading(true);
+      await fetch("/api/autodeletetransactionuser", { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order_id: order_id,
+        prevBalance: prevBalance
+      }), })
+        .then((res) =>
+          res.json().then((res) => {
+            router.refresh();
+          })
+        )
+        .catch(() => {
+          console.log("error");
+        })
+        .finally(() => {
+          setIsloading(false);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleOnClick = async () => {
     // if (!curruser.userBalance) {
     //   return "";
@@ -365,6 +392,7 @@ const DetailClient: React.FC<DetailProps> = ({
           body: JSON.stringify({
             id: service.id,
             price: final,
+            isBalance: isBalance
           }),
         })
           .then((res) => res.json())
@@ -373,6 +401,7 @@ const DetailClient: React.FC<DetailProps> = ({
               //open new tab
               window.open(res.redirect_url, "_blank");
               setOrderId(res.order_id);
+              setTimeout(()=> Autodeletetransaction(res.order_id, res.getPreviousBalance), 5 * 60 * 1000);
             } else {
               Swal.fire({
                 icon: "success",
@@ -549,7 +578,7 @@ const DetailClient: React.FC<DetailProps> = ({
                   <div className="flex">
                     <span className=" font-light text-black">
                       {currprofiles?.language.map((lg: any) => (
-                        <div className="">
+                        <div key={lg} className="">
                           {lg}
                         </div>
                       ))}

@@ -40,7 +40,7 @@ const DescriptionInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
             timer: 1500,
           });
           reset();
-          router.push(`/profiles/${currentProfile?.userId}`)
+          window.location.reload()
           setDescriptionEdit(false);
         } else if (res.data.statusCode === 401) {
           Swal.fire({

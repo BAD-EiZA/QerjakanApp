@@ -1,9 +1,9 @@
 import { env } from "process";
 
 const cloudinaryConfig = {
-  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-  apiKey: process.env.CLOUDINARY_API_KEY,
-  apiSecret: process.env.CLOUDINARY_API_SECRET,
+  cloudName: "dqmeg9ltr",
+  apiKey: "373698988825754",
+  apiSecret: "AT0elXDQhA9ogz1SaPtcDIG0g-I",
 };
   
   export default cloudinaryConfig;

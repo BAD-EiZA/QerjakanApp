@@ -48,6 +48,14 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ message: "Please Input Your Bank Information" , statusCode: 500});
     }
     else{
+      const findUUID = await prisma.forgotPasswordToken.findFirst({
+        where: {
+          email: findEmail.email
+        }
+      })
+      if(findUUID){
+        return NextResponse.json({message: "The verification link to become a seller has been sent to your email, please check your email", statusCode: 400})
+      }
         const createUUID = await prisma.forgotPasswordToken.create({
             data: {
               token: String(generateUUID),
@@ -55,6 +63,7 @@ export const POST = async (req: NextRequest) => {
               tokenType: "VerifySeller"
             },
           });
+          
           const mailData = {
             from: "lolimilkitaa@gmail.com",
             to: findEmail.email,
@@ -97,14 +106,22 @@ export const POST = async (req: NextRequest) => {
               <div class="container">
               <h1>Your Verification Link</h1>
               
-              <a href="http://localhost:3000/verifyseller/${createUUID.token}" class="button">Verify Account</a>
+              <a href="https://qerjakan.vercel.app/verifyseller/${createUUID.token}" class="button">Verify Account</a>
               </div>
           </body>`,
           };
-          transporter.sendMail(mailData, function (err: any, info: any) {
-            if (err) console.log(err);
-            else console.log(info);
-          });
+          await new Promise((resolve, reject) => {
+            // send mail
+            transporter.sendMail(mailData, (err, info) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    console.log(info);
+                    resolve(info);
+                }
+            });
+        });
           return NextResponse.json(
             { message: "Success to send verification", data: {} ,statusCode: 200},
             

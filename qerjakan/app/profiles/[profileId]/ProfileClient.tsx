@@ -20,7 +20,7 @@ import BankComponent from "@/app/components/profile/bank/BankComponent";
 
 interface ProfileClientProps {
   currentUser: SafeCurrentUser | null;
-  currentProfile: Profile | null
+  currentProfile: Profile
   userBank: UserBankAccount | null
 }
 interface TabPanelProps {

@@ -36,6 +36,7 @@ const BankComponent: React.FC<BankProps> = ({ currentUser, userBank }) => {
 
   const bankType = watch("bank_name");
   const account_number = watch("account_number")
+  const account_name = watch("account_name")
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -158,6 +159,33 @@ placeholder="Type your Account Number"
             required
           />
           <div className="divider"></div>
+          {/* <Input
+            id="pin"
+            max={6}
+            type="password"
+            label="Verification Pin"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+          /> */}
+        </div>
+        <div className="card-actions justify-start pt-4">
+          <button
+            className="btn btn-warning"
+            onClick={() => (window as any).passbutton.showModal()}
+            disabled={ account_name === ""|| account_number === "" || bankType === ""}
+          >
+            Update Bank Account
+          </button>
+        </div>
+        <dialog id="passbutton" className="modal">
+        <form method="dialog" className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={()=> setCustomValue("pin", "")}>
+            ✕
+          </button>
+          <h3 className="font-bold text-lg">Update Pin</h3>
+          <p>Input Pin</p>
           <Input
             id="pin"
             max={6}
@@ -168,12 +196,15 @@ placeholder="Type your Account Number"
             errors={errors}
             required
           />
-        </div>
-        <div className="card-actions justify-start pt-4">
-          <button onClick={handleSubmit(onSubmit)} className="btn btn-warning">
-            Update Bank
+          <button
+            onClick={handleSubmit(onSubmit)}
+            
+            className="btn btn-neutral mx-2"
+          >
+            Submit
           </button>
-        </div>
+        </form>
+      </dialog>
       </div>
     </div>
   );

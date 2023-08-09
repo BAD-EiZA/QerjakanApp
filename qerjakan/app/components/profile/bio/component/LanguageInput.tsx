@@ -29,7 +29,7 @@ const MenuProps = {
   },
 };
 interface DescriptionProps {
-  currentProfile: Profile | null;
+  currentProfile: Profile;
 }
 
 const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
@@ -38,11 +38,6 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
   const [choiceLevel, setChoiceLevel] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { data: AllLanguages = [] } = useAllLanguages();
-  const optionsLanguages = AllLanguages.map((language: any) => ({
-    value: language.languages_name,
-    label: language.languages_name,
-  }));
   const language_levels = [
     {
       value: "Basic",
@@ -106,7 +101,7 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
           setChoiceLanguage("");
           setChoiceLevel("");
           reset();
-          router.push(`/profiles/${currentProfile?.userId}`);
+          window.location.reload()
           
         } else if (res.data.statusCode === 401) {
           Swal.fire({
@@ -146,9 +141,27 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
   const toggleAddLanguage = () => {
     setLanguageAdd(!languageNewAdd);
   };
+  const splitArrayOfStrings = (arrayToSplit: string[]): string[][] => {
+    return arrayToSplit.map(item => [item.split(' ')[0]]);
+  };
+  
+  const splitCurrLanguage = splitArrayOfStrings(currentProfile?.language)
   useEffect(() => {
     setCustomValue("language", [choiceLanguage + " " + choiceLevel]);
   }, [choiceLanguage, choiceLevel]);
+  const mapArrayExcludingProfileValues = (profileArray: string[][], arrayToMap: string[]): string[] => {
+    return arrayToMap.filter(item => {
+      for (const profile of profileArray) {
+        if (profile.includes(item)) {
+          return false;
+        }
+      }
+      return true;
+    });
+  };
+  
+  const ListLanguage = ["English","Japanese", "Indonesia", "Romanian", "Russian", "Tagalog", "Sundanese", "Turkish", "Italian"]
+  const mappedArray = mapArrayExcludingProfileValues(splitCurrLanguage, ListLanguage)
   const handleDeleteLanguage = async (deleteLanguage: string) => {
     try {
       const res = await axios
@@ -184,6 +197,7 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
               <h2 className="hover:bg-green-400 hover:rounded-md  text-xs border-black hover:text-white flex border rounded-md justify-between items-center cursor-pointer px-2 group">
                 (+) Add Language
               </h2>
+              
             </div>
           )}
         </div>
@@ -219,9 +233,9 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
                 )}
                 MenuProps={MenuProps}
               >
-                {optionsLanguages.map((name: any) => (
-                  <MenuItem key={name.value} value={name.value}>
-                    {name.value}
+                {mappedArray.map((name: any) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
                   </MenuItem>
                 ))}
               </Select>
@@ -250,10 +264,7 @@ const LanguageInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
                   >
                     {mappedLanguage.map((name: any) => (
                       <MenuItem key={name.value} value={name.value}>
-                        <Checkbox
-                          checked={choiceLevel.indexOf(name.value) > -1}
-                        />
-                        <ListItemText primary={name.label} />
+                       {name.label}
                       </MenuItem>
                     ))}
                   </Select>

@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
   const verifySignature = crypto
     .createHash("sha512")
     .update(
-      `${order_id}${status_code}${gross_amount}${process.env.SERVER_KEY_MIDTRANS}`
+      `${order_id}${status_code}${gross_amount}SB-Mid-server-9943tHP6RMmOoxXEaX9j06fo`
     )
     .digest("hex");
 
@@ -62,7 +62,6 @@ export const POST = async (req: NextRequest) => {
     },
     data: {
       status: transaction_status,
-      amount: Number(gross_amount),
       gross_amount: Number(gross_amount),
       updatedAt: new Date(),
       payment_type: payment_type,
@@ -162,5 +161,5 @@ export const POST = async (req: NextRequest) => {
     
   }
 
-  return NextResponse.json({});
+  return NextResponse.json({message: "kadal"});
 };

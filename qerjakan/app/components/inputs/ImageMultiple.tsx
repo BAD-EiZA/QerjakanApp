@@ -40,11 +40,14 @@ const ImageMultiple: React.FC<ImageUploadProps> = ({ onChange, value }) => {
   console.log("upload image", value);
   return (
     <CldUploadWidget
+    // Replace with your Cloudinary cloud name
+      key="AT0elXDQhA9ogz1SaPtcDIG0g-I"
       onUpload={handleUpload}
-      uploadPreset={uploadPreset}
+      uploadPreset="ogh3dpkf"
       options={{
         maxFiles: 3,
       }}
+      
       
       onOpen={()=> onChange([])}
     >

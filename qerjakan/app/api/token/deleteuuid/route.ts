@@ -14,6 +14,7 @@ export const POST = async (req: NextRequest) => {
                 createdAt: {
                     lte: currentTime,
                 },
+                tokenType: "ForgotPassword"
             }
         })
         return NextResponse.json({ message: 'Delete Token Success', data: deleteUUID }, { status: 200 })

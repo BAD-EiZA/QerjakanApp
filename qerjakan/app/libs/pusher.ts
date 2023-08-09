@@ -2,9 +2,9 @@ import PusherServer from 'pusher'
 import PusherClient from 'pusher-js'
 
 export const pusherServer = new PusherServer({
-  appId: process.env.PUSHER_APP_ID!,
-  key: process.env.PUSHER_PUBLIC_KEY!,
-  secret: process.env.PUSHER_PRIVATE_KEY!,
+  appId: "1616907",
+  key: "1c486b565dce86080d62",
+  secret: "d7bd9e22c74dff350610",
   cluster: 'eu',
   useTLS: true,
 });

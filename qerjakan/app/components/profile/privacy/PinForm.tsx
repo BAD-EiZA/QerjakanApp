@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
+import Loader from "../../Loader";
 
 interface PinProps {
   currentUser: SafeCurrentUser | null;
@@ -41,7 +42,7 @@ const PinForm: React.FC<PinProps> = ({ currentUser }) => {
               showConfirmButton: false,
               timer: 1500,
             });
-            
+            ResetPin()
             router.refresh()
           }
           else if(res.statusCode == 401){
@@ -72,11 +73,20 @@ const PinForm: React.FC<PinProps> = ({ currentUser }) => {
           console.log("perkadalan", error.error);
         })
         .finally(() => {
-         
+         router.refresh()
           setIsLoading(false);
+          window.location.reload()
         });
     }
   };
+  if(isLoading){
+    return <Loader/>
+  }
+  const ResetPin = () => {
+    setNewPin('')
+    setPinVerification('')
+    setPin('')
+  }
   const handleInputNewPinChange = (event: ChangeEvent<HTMLInputElement>) => {
     const result = event.target.value.replace(/\D/g, '');
     setNewPin(result);
@@ -140,7 +150,7 @@ const PinForm: React.FC<PinProps> = ({ currentUser }) => {
       </div>
       <dialog id="passbutton" className="modal">
         <form method="dialog" className="modal-box">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          <button onClick={()=> ResetPin()} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
             ✕
           </button>
           <h3 className="font-bold text-lg">Update Pin</h3>

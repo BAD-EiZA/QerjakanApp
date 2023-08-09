@@ -72,6 +72,17 @@ const VerifyModal = () => {
           router.push("/")
           verifyModal.onClose();
         }
+        else if(res.data.statusCode === 400){
+          Swal.fire({
+            icon: "error",
+            title: "Verification Seller",
+            html: res.data.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          verifyModal.onClose();
+        }
         else{
             Swal.fire({
                 icon: "error",

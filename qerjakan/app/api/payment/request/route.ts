@@ -3,9 +3,9 @@ import prisma from "@/app/libs/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 import { stringify, v4 as uuidv4 } from 'uuid';
 import shortUUID from "short-uuid";
-import { includes } from "lodash";
+import { create, includes } from "lodash";
 export const POST = async (req: NextRequest) => {
-    const {id, price} = await req.json()
+    const {id, price,isBalance} = await req.json()
     const currUser = await getCurrentUser()
     if (!currUser) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
@@ -48,7 +48,43 @@ export const POST = async (req: NextRequest) => {
             body: JSON.stringify(body)
     })
 
-    
+    if(isBalance == true && isBalance !== null){
+        const createTrans = await prisma.transaction.create({
+            data:{
+                id: String(order_id),
+                amount: serviceCur.price,
+                gross_amount: price,
+                service: {
+                    connect: {
+                        id: serviceCur.id
+                    }
+                },
+                
+                status: 'pending',
+                payment_type: 'midtrans',
+                buyerName: currUser.name,
+                user: {
+                    connect: {
+                        id: currUser.id
+                    }
+                },
+            },
+            
+        })
+        
+        await prisma.user.update({
+            where: {
+                id: createTrans.userId
+            },
+            data: {
+                userBalance: {increment: -createTrans.gross_amount}
+            }
+        })
+
+        const getPreviousBalance = currUser.userBalance
+        const resJson = await response.json()
+        return NextResponse.json({  ...resJson, order_id, getPreviousBalance })
+    }
     await prisma.transaction.create({
         data:{
             id: String(order_id),

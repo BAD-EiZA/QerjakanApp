@@ -104,6 +104,6 @@ export async function POST(
     return new NextResponse('Success');
   } catch (error) {
     console.log(error, 'ERROR_MESSAGES_SEEN')
-    return new NextResponse('Error', { status: 500 });
+    return NextResponse.json({message: error + "500"});
   }
 }

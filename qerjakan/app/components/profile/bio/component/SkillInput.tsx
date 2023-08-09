@@ -205,7 +205,7 @@ const SkillInput: React.FC<DescriptionProps> = ({ currentProfile }) => {
                       key={kadal}
                       label={kadal}
                       onDelete={() => handleDeleteSkill(kadal)}
-                      deleteIcon={<AiOutlineClose />}
+                      
                     />
                   </>
                 ))}

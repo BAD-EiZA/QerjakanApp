@@ -5,6 +5,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Swal from "sweetalert2";
 import { signOut } from "next-auth/react";
+import Loader from "../../Loader";
 interface EmailProps {
   currentUser: SafeCurrentUser | null;
 }
@@ -72,9 +73,18 @@ const PasswordForm: React.FC<EmailProps> = ({ currentUser }) => {
           
           router.refresh()
           setIsLoading(false);
+          
         });
     }
   };
+  if(isLoading){
+    return <Loader/>
+  }
+  const ResetPassword = () => {
+    setPassword("")
+    setPin("")
+    setVerification("")
+  }
   return (
     <div>
       <div className="pb-4">
@@ -122,7 +132,7 @@ const PasswordForm: React.FC<EmailProps> = ({ currentUser }) => {
       </div>
       <dialog id="pinbutton" className="modal">
         <form method="dialog" className="modal-box">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={()=> ResetPassword()}>
             ✕
           </button>
           <h3 className="font-bold text-lg">Update Pin</h3>

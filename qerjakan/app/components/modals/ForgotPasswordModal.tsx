@@ -69,7 +69,7 @@ const ForgotModal = () => {
           });
 
           forgotModal.onClose();
-          setTimeout(deletePreviousUUIDs, 1 * 60 * 1000);
+          setTimeout(deletePreviousUUIDs, 5 * 60 * 1000);
         }
       })
       .catch((error) => {

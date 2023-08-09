@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
       return null;
     }
     if (getEmail.isSeller === false) {
-      const currentTime = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+      const currentTime = new Date(Date.now() - 5 * 60 * 1000);
 
       await prisma.forgotPasswordToken.deleteMany({
         where: {
@@ -38,7 +38,7 @@ export const POST = async (req: NextRequest) => {
         { status: 200 }
       );
     } else {
-      const currentTime = new Date(Date.now() - 1 * 60 * 1000);
+      const currentTime = new Date(Date.now() - 5 * 60 * 1000);
 
       await prisma.forgotPasswordToken.deleteMany({
         where: {

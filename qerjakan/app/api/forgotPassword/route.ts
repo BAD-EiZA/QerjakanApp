@@ -83,14 +83,22 @@ export const POST = async (req: NextRequest) => {
         <div class="container">
         <h1>Your Reset Password Link</h1>
         
-        <a href="http://localhost:3000/resetpassword/${createUUID.token}" class="button">Reset Password</a>
+        <a href="https://qerjakan.vercel.app/resetpassword/${createUUID.token}" class="button">Reset Password</a>
         </div>
     </body>`,
     };
-    transporter.sendMail(mailData, function (err: any, info: any) {
-      if (err) console.log(err);
-      else console.log(info);
-    });
+    await new Promise((resolve, reject) => {
+      // send mail
+      transporter.sendMail(mailData, (err, info) => {
+          if (err) {
+              console.error(err);
+              reject(err);
+          } else {
+              console.log(info);
+              resolve(info);
+          }
+      });
+  });
     return NextResponse.json(
       { message: "Send Reset Password Success", data: {} },
       { status: 200 }

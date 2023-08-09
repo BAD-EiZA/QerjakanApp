@@ -44,7 +44,7 @@ const MenuProps = {
 };
 
 interface BioProps {
-  currentProfile: Profile | null;
+  currentProfile: Profile;
 }
 const BioComponent: React.FC<BioProps> = ({ currentProfile }) => {
   const [languageNewAdd, setLanguageAdd] = useState(false);

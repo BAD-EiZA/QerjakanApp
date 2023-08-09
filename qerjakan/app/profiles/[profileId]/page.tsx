@@ -19,7 +19,9 @@ const Profiles = async ({ params }: { params: IParams }) => {
   const currentProfile = await getProfileById(params);
   if (!currUser) {
     return redirect('/')
-    
+  }
+  if(!currentProfile){
+    return []
   }
   
   return (

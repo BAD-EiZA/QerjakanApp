@@ -98,10 +98,19 @@ export async function POST(request: Request) {
           </div>
       </body>`,
   };
-  transporter.sendMail(mailData, function (err: any, info: any) {
-    if (err) console.log(err);
-    else console.log(info);
-  });
+  await new Promise((resolve, reject) => {
+    // send mail
+    transporter.sendMail(mailData, (err, info) => {
+        if (err) {
+            console.error(err);
+            reject(err);
+        } else {
+            console.log(info);
+            resolve(info);
+        }
+    });
+});
+  
 
   return NextResponse.json({message: "Please Check Your Email To Verification Account", statusCode: 200});
 }

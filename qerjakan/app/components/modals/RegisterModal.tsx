@@ -236,13 +236,13 @@ const RegisterModal = () => {
   const bodyContent = stepContent[step];
   const footerContent = (
     <div className="flex flex-col gap-2">
-      <hr />
+      {/* <hr />
       <Button
         outline
         label="Continue with Google"
         icon={FcGoogle}
         onClick={() => signIn("google")}
-      />
+      /> */}
       <div
         className="
               text-neutral-500 
