@@ -208,7 +208,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser, userBank }) => {
               label="Withdraw"
             />
 
-            <MenuItem onClick={() => signOut()} label="Logout" />
+            <MenuItem onClick={() => signOut({callbackUrl: '/'})} label="Logout" />
           </>
         ) : (
           <>
